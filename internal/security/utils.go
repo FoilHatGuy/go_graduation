@@ -10,11 +10,11 @@ func generateNumber(length int) (number int64, err error) {
 	b := make([]byte, length)
 	_, err = rand.Read(b)
 	if err != nil {
-		return 0, fmt.Errorf("[security:utils] while generating random number\n%s", err)
+		return 0, fmt.Errorf("[security:utils] while generating random number\n%w", err)
 	}
 	num, err := strconv.ParseInt(string(b), 10, 0)
 	if err != nil {
-		return 0, fmt.Errorf("[security:utils] while generating random number\n%s", err)
+		return 0, fmt.Errorf("[security:utils] while generating random number\n%w", err)
 	}
 	return num, nil
 }

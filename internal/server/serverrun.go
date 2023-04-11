@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"go_graduation/internal/cfg"
+	"go_graduation/internal/server/handlers"
+	"go_graduation/internal/server/middleware"
 	"log"
 )
 
@@ -11,21 +13,23 @@ func Run() {
 	r := gin.Default()
 	baseRouter := r.Group("")
 	{
-		//baseRouter.Use(Gzip())
-		//baseRouter.Use(Gunzip())
-		api := baseRouter.Group("/api")
+		baseRouter.Use(middleware.Gzip())
+		baseRouter.Use(middleware.Gunzip())
+		baseRouter.GET("/ping", handlers.Ping)
+		api := baseRouter.Group("/api/user")
 		{
-			api.GET("/ping", ping)
+			api.POST("/register", handlers.Register)
+			api.POST("/login", handlers.Login)
+			authorized := baseRouter.Group("/").Use(middleware.Cooker())
+			{
+				authorized.POST("/orders", handlers.OrdersPost)
+				authorized.GET("/orders", handlers.OrdersGet)
+				authorized.GET("/balance", handlers.Balance)
+				authorized.POST("/balance/withdraw", handlers.Withdraw)
+				authorized.GET("/withdrawals", handlers.Withdrawals)
+			}
 		}
 	}
-
-	//POST /api/user/register — регистрация пользователя;
-	//POST /api/user/login — аутентификация пользователя;
-	//POST /api/user/orders — загрузка пользователем номера заказа для расчёта;
-	//GET /api/user/orders — получение списка загруженных пользователем номеров заказов, статусов их обработки и информации о начислениях;
-	//GET /api/user/balance — получение текущего баланса счёта баллов лояльности пользователя;
-	//POST /api/user/balance/withdraw — запрос на списание баллов с накопительного счёта в счёт оплаты нового заказа;
-	//GET /api/user/withdrawals — получение информации о выводе средств с накопительного счёта пользователем.
 
 	fmt.Println("SERVER LISTENING ON", cfg.Server.Address)
 	log.Fatal(r.Run(cfg.Server.Address))

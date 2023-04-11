@@ -38,8 +38,8 @@ type EngineT struct {
 type AuthEngine interface {
 	HashPassword(password string) (string, error)
 	ValidatePassword(password, hash string) bool
-	ValidateCookie(cookie string) (uid string, err error)
-	GenerateCookie() (cookie string, uid string, err error)
+	ValidateCookie(cookie string) (sid string, err error)
+	GenerateCookie() (cookie string, sid string, err error)
 	ValidateOrder(ordNum string) (valid bool, err error)
 	GenerateOrder() (ordNum string, err error)
 }
@@ -67,7 +67,7 @@ func (e *EngineT) GenerateCookie() (string, string, error) {
 	b := make([]byte, 16)
 	_, err := rand.Read(b)
 	if err != nil {
-		return "", "", fmt.Errorf("[security:security] while generating seessionid\n%s", err)
+		return "", "", fmt.Errorf("[security:security] while generating seessionid\n%w", err)
 	}
 	dst := make([]byte, aes.BlockSize)
 	e.crypt.Encrypt(dst, b)
@@ -78,7 +78,7 @@ func (e *EngineT) GenerateCookie() (string, string, error) {
 func (e *EngineT) ValidateOrder(ordNum string) (valid bool, err error) {
 	num, err := strconv.ParseInt(ordNum, 10, 0)
 	if err != nil {
-		return false, fmt.Errorf("[security:security] while validating order number\n%s", err)
+		return false, fmt.Errorf("[security:security] while validating order number\n%w", err)
 	}
 	return validateLuhn(num), nil
 }
@@ -86,7 +86,7 @@ func (e *EngineT) ValidateOrder(ordNum string) (valid bool, err error) {
 func (e *EngineT) GenerateOrder() (ordNum string, err error) {
 	num, err := generateNumber(15)
 	if err != nil {
-		return "", fmt.Errorf("[security:security] while generating order number\n%s", err)
+		return "", fmt.Errorf("[security:security] while generating order number\n%w", err)
 	}
 	num = calculateLuhn(num)
 	return "0", nil

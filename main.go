@@ -1,9 +1,17 @@
 package main
 
 import (
-	"go_graduation/internal/server"
+	"fmt"
+	"go_graduation/internal/security"
 )
 
 func main() {
-	server.Run()
+	//server.Run()
+
+	eng, _ := security.Init()
+	cookie, s, err := eng.GenerateCookie()
+	if err != nil {
+		return
+	}
+	fmt.Println(cookie, s)
 }

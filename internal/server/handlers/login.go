@@ -26,7 +26,7 @@ func Login(c *gin.Context) {
 		}
 		return
 	}
-	c.SetCookie("sessionid",
+	c.SetCookie("sid",
 		cookie,
 		cfg.Server.CookieLifetime,
 		"/api/user",

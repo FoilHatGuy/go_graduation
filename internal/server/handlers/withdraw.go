@@ -47,7 +47,7 @@ func Withdraw(c *gin.Context) {
 			return
 		}
 	}
-	err = database.Controller.AddOrder(c, input)
+	err = database.Controller.AddOrder(c, uid.(string), input)
 
 	if err != nil {
 		c.String(http.StatusInternalServerError,

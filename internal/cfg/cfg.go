@@ -12,14 +12,12 @@ var (
 
 func Initialize() {
 	Server = serverCfg{
-		Address: genv.Key(
-			"RUN_ADDRESS").Default("localhost").String(),
-		CookieLifetime: 30 * 24 * 60 * 60,
-		AccrualSystemAddress: genv.Key(
-			"SERVER_PORT").Default("8080").String(),
+		Address:              genv.Key("RUN_ADDRESS ").Default("localhost").String(),
+		CookieLifetime:       30 * 24 * 60 * 60,
+		AccrualSystemAddress: genv.Key("SERVER_PORT").Default("8080").String(),
 	}
 	Database = databaseCfg{
-		DatabaseUri: genv.Key(
-			"DATABASE_URI ").Default("").String(),
+		DatabaseUri: genv.Key("DATABASE_URI ").Default("").String(),
 	}
+
 }

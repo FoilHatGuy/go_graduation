@@ -14,6 +14,5 @@ services:
       - "5432:5432"
     environment:
       POSTGRES_PASSWORD: "1111"
-      POSTGRES_USER: "postgres"
     volumes:
-      - ./pg_data:/var/lib/postgresql/data
+      - /pg_data:/var/lib/postgresql/data

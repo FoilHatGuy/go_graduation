@@ -38,7 +38,7 @@ type EngineT struct {
 type AuthEngine interface {
 	HashPassword(password string) (string, error)
 	ValidatePassword(password, hash string) bool
-	DecypherCookie(cookie string) (sid string, err error)
+	ValidateCookie(cookie string) (sid string, err error)
 	GenerateCookie() (cookie string, sid string, err error)
 	ValidateOrder(ordNum string) (valid bool, err error)
 	GenerateOrder() (ordNum string, err error)
@@ -54,7 +54,7 @@ func (e *EngineT) ValidatePassword(password, hash string) bool {
 	return err == nil
 }
 
-func (e *EngineT) DecypherCookie(s string) (string, error) {
+func (e *EngineT) ValidateCookie(s string) (string, error) {
 	src, _ := hex.DecodeString(s)
 	dst := make([]byte, aes.BlockSize)
 	e.crypt.Decrypt(dst, src)

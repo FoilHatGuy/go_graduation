@@ -2,7 +2,7 @@ package cfg
 
 import (
 	"github.com/sakirsensoy/genv"
-	"github.com/sakirsensoy/genv/dotenv"
+	_ "github.com/sakirsensoy/genv/dotenv/autoload"
 )
 
 var (
@@ -11,20 +11,15 @@ var (
 )
 
 func Initialize() {
-	err := dotenv.Load("./.env")
-	if err != nil {
-		return
-	}
-
 	Server = serverCfg{
 		Address: genv.Key(
-			"RUN_ADDRESS").Default("localhost:1000").String(),
+			"RUN_ADDRESS").Default("localhost").String(),
 		CookieLifetime: 30 * 24 * 60 * 60,
 		AccrualSystemAddress: genv.Key(
-			"ACCRUAL_SYSTEM_ADDRESS").Default("localhost:1000").String(),
+			"SERVER_PORT").Default("8080").String(),
 	}
 	Database = databaseCfg{
 		DatabaseUri: genv.Key(
-			"DATABASE_URI").Default("").String(),
+			"DATABASE_URI ").Default("").String(),
 	}
 }

@@ -39,7 +39,7 @@ func helperLogin(ctx context.Context, login string, password string) (cookie str
 		return "", fmt.Errorf("[server:utils:login] while creating cookie\n%w", err)
 	}
 
-	err = database.Controller.AddSession(ctx, sid, login)
+	err = database.Controller.AddSession(ctx, login, sid)
 	if err != nil {
 		return "", fmt.Errorf("[server:utils:login] while adding session\n%w", err)
 	}

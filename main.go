@@ -1,17 +1,19 @@
 package main
 
 import (
-	"fmt"
-	"go_graduation/internal/security"
+	"go_graduation/internal/cfg"
+	"go_graduation/internal/server"
 )
 
 func main() {
-	//server.Run()
+	cfg.Initialize()
+	//database.InitDB()/
+	server.Run()
 
-	eng, _ := security.Init()
-	cookie, s, err := eng.GenerateCookie()
-	if err != nil {
-		return
-	}
-	fmt.Println(cookie, s)
+	//eng, _ := security.Init()
+	//cookie, s, err := eng.GenerateCookie()
+	//if err != nil {
+	//	return
+	//}
+	//fmt.Println(cookie, s)
 }

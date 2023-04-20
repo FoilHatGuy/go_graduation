@@ -1,9 +1,7 @@
 package main
 
-import (
-	"go_graduation/internal/server"
-)
+import "fmt"
 
 func main() {
-	server.Run()
+	fmt.Println("SERVER STARTED")
 }

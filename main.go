@@ -1,7 +1,19 @@
 package main
 
-import "fmt"
+import (
+	"go_graduation/internal/cfg"
+	"go_graduation/internal/server"
+)
 
 func main() {
-	fmt.Println("SERVER STARTED")
+	cfg.Initialize()
+	//database.InitDB()/
+	server.Run()
+
+	//eng, _ := security.Init()
+	//cookie, s, err := eng.GenerateCookie()
+	//if err != nil {
+	//	return
+	//}
+	//fmt.Println(cookie, s)
 }
